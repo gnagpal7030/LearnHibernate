@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE hibernate-configuration
+        PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<!--
+Main configuration file for the Hibernate Object-Relational Mapping (ORM) framework.
+It defines how Java objects map to relational database tables and manages connection behavior.
+-->
+<hibernate-configuration>
+
+    <!--    In Hibernate, the SessionFactory is a heavyweight, thread-safe factory that
+    produces Session objects for interacting with the database. In an XML configuration file (hibernate.cfg.xml),
+    it is represented by the <session-factory> tag, which serves as the container for all database connection settings and entity mapping references-->
+    <session-factory>
+
+        <!--
+        Specifies the fully qualified name of the MySQL JDBC driver class.
+        This driver acts as the bridge that translates Hibernate's database commands into network calls the MySQL server understands.
+        -->
+        <property name="connection.driver_class">
+            com.mysql.cj.jdbc.Driver
+        </property>
+
+        <!--
+        The connection endpoint URL string pointing to the target database engine instance.
+        It defines the protocol (jdbc), the vendor driver (mysql), the server location (localhost), and the specific schema name (myDB).
+        -->
+        <property name="connection.url">
+            jdbc:mysql://localhost:3306/myDB
+        </property>
+
+        <!--
+        Instructs Hibernate to generate database-specific SQL syntax optimized exclusively for MySQL 8 engines.
+        This ensures that features like modern data types, pagination keywords, and locking mechanisms match the exact database capabilities.
+        -->
+        <property name="dialect">
+            org.hibernate.dialect.MySQL8Dialect
+        </property>
+
+        <!--
+        The security credential username used to establish authentication with the database server.
+        The user account must have sufficient privileges to read, write, and alter tables within the designated schema.
+        -->
+        <property name="connection.username">
+            root
+        </property>
+
+        <!--
+        The security credential password corresponding to the database username specified above.
+        Leaving this value blank implies that the local database root user account has been configured with no active password.
+        -->
+        <property name="connection.password">
+
+        </property>
+
+        <!--
+        Defines the maximum number of active database connections held ready inside Hibernate's internal connection pool.
+        This limits resource consumption while optimizing performance by reusing existing connections instead of creating new ones for every transaction.
+        -->
+        <property name="connection.pool_size">
+            3
+        </property>
+
+        <!--
+        Configures the session scoping mechanism to bind the active Hibernate Session lifecycle directly to the current execution thread.
+        This allows developer code to easily retrieve the active session anywhere in the thread context via the handy factory.getCurrentSession() method.
+        -->
+        <property name="current_session_context_class">
+            thread
+        </property>
+
+        <!--
+        Enables the logging flag to pipe every generated SQL statement directly into the standard system console at runtime.
+        This provides developers with real-time visibility into the exact database queries executing under the hood for debugging purposes.
+        -->
+        <property name="show_sql">
+            true
+        </property>
+
+        <!--
+        Complements the SQL logging flag by cleanly formatting multi-line SQL outputs with readable line breaks and proper indentation.
+        This transforms long, single-line database strings into an easy-to-read layout for immediate structural analysis in the console.
+        -->
+        <property name="format_sql">
+            true
+        </property>
+
+        <!--
+        Configures the automatic Data Definition Language (DDL) automation tool to dynamically update the database schema structure on startup.
+        It safely inspects existing tables, creates missing entities, and appends new column alterations without destroying or dropping existing table data.
+        -->
+        <property name="hbm2ddl.auto">
+            update
+        </property>
+
+
+        <!--
+        <mapping class="com.mcnz.jpa.examples.Player"/>
+        What This Line Does
+        Links Java to Database: It tells Hibernate that the Student class contains metadata (annotations like @Entity and @Table) for mapping to a database table.
+        Automates Metadata Loading: It instructs the SessionFactory to scan and load this specific class during application startup [1].
+        -->
+
+        <mapping class="com.learnhibernate.entities.Student"/>
+        <mapping class="com.learnhibernate.entities.Certificates"/>
+
+    </session-factory>
+
+</hibernate-configuration>
