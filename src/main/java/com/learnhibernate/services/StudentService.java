@@ -25,6 +25,8 @@ public class StudentService {
                     student.getCertificatesList().add(certificate);
                     certificate.setStudent(student);
                 }
+
+//                student.setCertificatesList(Arrays.asList(certificates));
             }
 
             // Save student
